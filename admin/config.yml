@@ -1,0 +1,70 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/img/uploads"
+public_folder: "/assets/img/uploads"
+
+site_url: https://kstylesimages.com
+display_url: https://kstylesimages.com
+
+collections:
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "general"
+        label: "General"
+        file: "assets/data/site.json"
+        fields:
+          - { label: "Homepage tagline", name: "tagline", widget: "string" }
+          - { label: "Calendly booking link", name: "calendlyUrl", widget: "string" }
+          - { label: "Instagram link", name: "instagramUrl", widget: "string" }
+          - { label: "Linktree link", name: "linktreeUrl", widget: "string" }
+          - { label: "Homepage hero photo", name: "heroImage", widget: "image" }
+
+  - name: "sessions"
+    label: "Session Pages"
+    files:
+      - name: "headshot"
+        label: "Headshot Session"
+        file: "assets/data/headshot-session.json"
+        fields:
+          - { label: "Page title", name: "title", widget: "string" }
+          - { label: "Price line", name: "price", widget: "string", hint: "Shown next to the title, e.g. 'Starts at $549'" }
+          - { label: "Description", name: "description", widget: "text" }
+          - label: "Photos"
+            name: "images"
+            widget: "list"
+            summary: "{{fields.src}}"
+            field: { label: "Photo", name: "src", widget: "image" }
+
+      - name: "studio"
+        label: "Studio Creative Session"
+        file: "assets/data/studio-creative-session.json"
+        fields:
+          - { label: "Page title", name: "title", widget: "string" }
+          - { label: "Price line", name: "price", widget: "string", hint: "Shown next to the title, e.g. 'Starts at $950 (all-in rate)'" }
+          - { label: "Description", name: "description", widget: "text" }
+          - label: "Portrait / Editorial / Lifestyle Photos"
+            name: "images"
+            widget: "list"
+            summary: "{{fields.src}}"
+            field: { label: "Photo", name: "src", widget: "image" }
+          - label: "Product Photography (shown grouped at the bottom of the page)"
+            name: "productImages"
+            widget: "list"
+            summary: "{{fields.src}}"
+            field: { label: "Photo", name: "src", widget: "image" }
+
+      - name: "outdoor"
+        label: "Outdoor Lifestyle Session"
+        file: "assets/data/outdoor-lifestyle-session.json"
+        fields:
+          - { label: "Page title", name: "title", widget: "string" }
+          - { label: "Price line", name: "price", widget: "string", hint: "Shown next to the title, e.g. 'Starts at $650'" }
+          - { label: "Description", name: "description", widget: "text" }
+          - label: "Photos"
+            name: "images"
+            widget: "list"
+            summary: "{{fields.src}}"
+            field: { label: "Photo", name: "src", widget: "image" }
