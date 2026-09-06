@@ -23,7 +23,7 @@ function navHTML(activeSlug) {
   }).join("");
   return `
 <nav class="site-nav">
-  <a href="index.html" class="nav-mark">K Style Images</a>
+  <a href="index.html" class="nav-mark">K Styles Images</a>
   <button class="nav-toggle" aria-label="Menu">&#9776;</button>
   <div class="nav-links">
     <div class="work-dropdown">
@@ -38,13 +38,13 @@ function navHTML(activeSlug) {
 function footerHTML() {
   return `
 <footer>
-  <div class="foot-mark">K Style Images</div>
+  <div class="foot-mark">K Styles Images</div>
   <div class="foot-links">
     <a href="${site.calendlyUrl}" target="_blank" rel="noopener">Book a session</a>
     <a href="${site.instagramUrl}" target="_blank" rel="noopener">Instagram</a>
     <a href="${site.linktreeUrl}" target="_blank" rel="noopener">Linktree</a>
   </div>
-  <div>&copy; 2026 K Style Images</div>
+  <div>&copy; 2026 K Styles Images</div>
 </footer>`;
 }
 
@@ -55,7 +55,7 @@ function pageShell(title, body, activeSlug) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
-<meta name="description" content="K Style Images — portrait and fashion photography portfolio.">
+<meta name="description" content="K Styles Images — portrait and fashion photography portfolio.">
 <link rel="stylesheet" href="assets/style.css">
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(user){if(!user){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}});}</script>
@@ -91,9 +91,9 @@ SESSIONS.forEach((s) => {
 
 const homeBody = `
 <section class="hero">
-  <img src="${site.heroImage}" alt="K Style Images featured portrait">
+  <img src="${site.heroImage}" alt="K Styles Images featured portrait">
   <div class="hero-content">
-    <h1>K Style Images</h1>
+    <h1>K Styles Images</h1>
     <p>${site.tagline}</p>
     <div class="hero-actions">
       <a href="${site.calendlyUrl}" target="_blank" rel="noopener" class="btn">Book a session</a>
@@ -104,7 +104,7 @@ const homeBody = `
 ${homeFigs}
 </section>`;
 
-fs.writeFileSync(path.join(ROOT, "index.html"), pageShell("K Style Images — Portrait & Fashion Photography", homeBody));
+fs.writeFileSync(path.join(ROOT, "index.html"), pageShell("K Styles Images — Portrait & Fashion Photography", homeBody));
 
 // ---------- Category pages ----------
 SESSIONS.forEach((s) => {
@@ -128,7 +128,7 @@ SESSIONS.forEach((s) => {
 <section class="wall gallery">${figuresHTML(productImgs, "Product Photography")}</section>`;
   }
 
-  fs.writeFileSync(path.join(ROOT, `${s.slug}.html`), pageShell(`${data.title} — K Style Images`, body, s.slug));
+  fs.writeFileSync(path.join(ROOT, `${s.slug}.html`), pageShell(`${data.title} — K Styles Images`, body, s.slug));
 });
 
 console.log("Site built:", ["index.html", ...SESSIONS.map((s) => s.slug + ".html")].join(", "));
