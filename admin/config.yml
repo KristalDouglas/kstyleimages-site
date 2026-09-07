@@ -21,6 +21,9 @@ collections:
           - { label: "Instagram link", name: "instagramUrl", widget: "string" }
           - { label: "Linktree link", name: "linktreeUrl", widget: "string" }
           - { label: "Homepage hero photo", name: "heroImage", widget: "image" }
+          - { label: "Accent color (buttons, links, highlights)", name: "accentColor", widget: "color", hint: "The gold color used for buttons, links, and highlights across the site." }
+          - { label: "Background color", name: "backgroundColor", widget: "color", hint: "The dark background color across the whole site. Keep this dark, or text may become hard to read." }
+          - { label: "Text color", name: "textColor", widget: "color", hint: "The main text color. Keep this light, since it's shown on a dark background." }
 
   - name: "sessions"
     label: "Session Pages"
