@@ -39,7 +39,7 @@ function navHTML(activeSlug) {
   <button class="nav-toggle" aria-label="Menu">&#9776;</button>
   <div class="nav-links">
     <div class="work-dropdown">
-      <a href="index.html#work">Portfolios</a>
+      <button type="button" class="dropdown-trigger" aria-expanded="false">Portfolios</button>
       <div class="work-dropdown-panel">${dropdown}</div>
     </div>
     <a href="${site.calendlyUrl}" target="_blank" rel="noopener" class="nav-book">Book a session</a>
