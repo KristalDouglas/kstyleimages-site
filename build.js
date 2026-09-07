@@ -91,16 +91,28 @@ function figuresHTML(imgs, label) {
 
 // ---------- Home page ----------
 let homeFigs = "";
-SESSIONS.forEach((s) => {
-  const data = sessionData[s.slug];
-  const label = data.title;
-  const imgs = data.images || [];
-  const step = Math.max(1, Math.ceil(imgs.length / 6));
-  const sample = imgs.length <= 6 ? imgs : imgs.filter((_, idx) => idx % step === 0).slice(0, 6);
-  sample.forEach((src) => {
-    homeFigs += `<figure><a href="${s.slug}.html"><img src="${src}" alt="${label}" loading="lazy"><figcaption>${label}</figcaption></a></figure>`;
+let imgCount = 0;
+if (site.homepageImages && site.homepageImages.length) {
+  site.homepageImages.forEach((item) => {
+    const src = item.src || item;
+    const loadAttr = imgCount < 6 ? "eager" : "lazy";
+    homeFigs += `<figure><img src="${src}" alt="K Styles Images" loading="${loadAttr}"></figure>`;
+    imgCount++;
   });
-});
+} else {
+  SESSIONS.forEach((s) => {
+    const data = sessionData[s.slug];
+    const label = data.title;
+    const imgs = data.images || [];
+    const step = Math.max(1, Math.ceil(imgs.length / 6));
+    const sample = imgs.length <= 6 ? imgs : imgs.filter((_, idx) => idx % step === 0).slice(0, 6);
+    sample.forEach((src) => {
+      const loadAttr = imgCount < 6 ? "eager" : "lazy";
+      homeFigs += `<figure><a href="${s.slug}.html"><img src="${src}" alt="${label}" loading="${loadAttr}"><figcaption>${label}</figcaption></a></figure>`;
+      imgCount++;
+    });
+  });
+}
 
 const homeBody = `
 <section class="hero">
