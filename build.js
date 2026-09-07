@@ -92,6 +92,7 @@ function figuresHTML(imgs, label) {
 // ---------- Home page ----------
 let homeFigs = "";
 let imgCount = 0;
+let homePoolScript = "";
 if (site.homepageImages && site.homepageImages.length) {
   site.homepageImages.forEach((item) => {
     const src = item.src || item;
@@ -100,6 +101,17 @@ if (site.homepageImages && site.homepageImages.length) {
     imgCount++;
   });
 } else {
+  // Build the full pool (used for client-side rotation on every visit)
+  const pool = [];
+  SESSIONS.forEach((s) => {
+    const data = sessionData[s.slug];
+    (data.images || []).forEach((src) => {
+      pool.push({ src, slug: s.slug, label: data.title });
+    });
+  });
+  homePoolScript = `<script>window.HOME_POOL=${JSON.stringify(pool)};</script>`;
+
+  // Static fallback (shown if JS is disabled, and on first paint before JS swaps it in)
   SESSIONS.forEach((s) => {
     const data = sessionData[s.slug];
     const label = data.title;
@@ -127,7 +139,8 @@ const homeBody = `
 </section>
 <section id="work" class="wall home">
 ${homeFigs}
-</section>`;
+</section>
+${homePoolScript}`;
 
 fs.writeFileSync(path.join(ROOT, "index.html"), pageShell("K Styles Images — Portrait & Fashion Photography", homeBody));
 
@@ -142,7 +155,6 @@ SESSIONS.forEach((s) => {
 <header class="cat-bar">
   <a class="back-link" href="index.html#work">&#8592; All work</a>
   <h1>${data.title}</h1>
-  <span class="count">${total} images</span>
   <div class="pkg">${data.price} — ${data.description}</div>
 </header>
 <section class="wall gallery">${figuresHTML(mainImgs, data.title)}</section>`;
