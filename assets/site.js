@@ -16,6 +16,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Homepage photo rotation: pick a fresh random mix from the full pool on every visit
+  if (window.HOME_POOL && window.HOME_POOL.length) {
+    var pool = window.HOME_POOL.slice();
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+    var count = Math.min(18, pool.length);
+    var picked = pool.slice(0, count);
+    var wall = document.querySelector(".wall.home");
+    if (wall) {
+      var html = picked.map(function (item, idx) {
+        var loadAttr = idx < 6 ? "eager" : "lazy";
+        return '<figure><a href="' + item.slug + '.html"><img src="' + item.src + '" alt="' + item.label + '" loading="' + loadAttr + '"><figcaption>' + item.label + '</figcaption></a></figure>';
+      }).join("");
+      wall.innerHTML = html;
+    }
+  }
+
   // Lightbox
   var figures = document.querySelectorAll(".wall.gallery img");
   if (figures.length) {
