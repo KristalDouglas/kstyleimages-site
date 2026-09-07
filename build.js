@@ -5,6 +5,18 @@ const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, "assets", "data");
 
 const site = JSON.parse(fs.readFileSync(path.join(DATA_DIR, "site.json")));
+site.accentColor = site.accentColor || "#b08d57";
+site.backgroundColor = site.backgroundColor || "#14140f";
+site.textColor = site.textColor || "#ede9e0";
+
+function lighten(hex, amt) {
+  const n = parseInt(hex.replace("#", ""), 16);
+  const r = Math.min(255, (n >> 16) + amt);
+  const g = Math.min(255, ((n >> 8) & 0xff) + amt);
+  const b = Math.min(255, (n & 0xff) + amt);
+  return "#" + [r, g, b].map((c) => c.toString(16).padStart(2, "0")).join("");
+}
+const accentBright = lighten(site.accentColor, 30);
 const SESSIONS = [
   { slug: "headshot-session", file: "headshot-session.json" },
   { slug: "studio-creative-session", file: "studio-creative-session.json" },
@@ -57,6 +69,7 @@ function pageShell(title, body, activeSlug) {
 <title>${title}</title>
 <meta name="description" content="K Styles Images — portrait and fashion photography portfolio.">
 <link rel="stylesheet" href="assets/style.css">
+<style>:root{--accent:${site.accentColor};--accent-bright:${accentBright};--bg:${site.backgroundColor};--text:${site.textColor};}</style>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(user){if(!user){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}});}</script>
 </head>
