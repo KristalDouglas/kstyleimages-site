@@ -16,6 +16,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Portfolios dropdown: click to open/close (not hover, which was unreliable)
+  var dropdown = document.querySelector(".work-dropdown");
+  var trigger = document.querySelector(".dropdown-trigger");
+  if (dropdown && trigger) {
+    trigger.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.toggle("open");
+      trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+    document.addEventListener("click", function (e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        dropdown.classList.remove("open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   // Homepage photo rotation: pick a fresh random mix from the full pool on every visit
   if (window.HOME_POOL && window.HOME_POOL.length) {
     var pool = window.HOME_POOL.slice();
