@@ -1,0 +1,13 @@
+{
+  "title": "Event Photography",
+  "price": "Half Day (up to 4 hours): $1,500 — Full Day (up to 8 hours): $3,000",
+  "description": "Event coverage for corporate functions, birthdays, conferences, galas, and parties. Weddings not included.",
+  "images": [
+    "assets/img/event-session/event-session-01.jpg",
+    "assets/img/event-session/event-session-02.jpg",
+    "assets/img/event-session/event-session-03.jpg",
+    "assets/img/event-session/event-session-04.jpg",
+    "assets/img/event-session/event-session-05.jpg",
+    "assets/img/event-session/event-session-06.jpg"
+  ]
+}
