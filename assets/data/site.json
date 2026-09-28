@@ -1,10 +1,19 @@
 {
-  "tagline": "Portrait and fashion photography built around light, color, and character.",
+  "tagline": "Moments worth remembering, captured together.",
+  "shareDescription": "Portrait, fashion, and event photography built around light, color, and character.",
   "calendlyUrl": "https://calendly.com/kstylesimages/30min",
   "instagramUrl": "https://www.instagram.com/kstyles.images",
   "linktreeUrl": "https://linktr.ee/kstyles.images",
-  "heroImage": "/assets/img/uploads/_mg_7352-11-edit.jpg",
+  "heroImage": "assets/img/uploads/_mg_7352-11-edit.jpg",
   "accentColor": "#b08d57",
   "backgroundColor": "#14140f",
-  "textColor": "#ede9e0"
+  "textColor": "#ede9e0",
+  "aboutTitle": "Why I Do Photography",
+  "aboutText": [
+    "My twin sister and I were in foster care, and during our first year, a baby book was made for each of us. I remember flipping through mine over and over, thinking I'd love to freeze moments in time like that for others one day. Then I brought it to school for show and tell and lost it. It was one of the worst days of my life. I felt like my memories had been erased.",
+    "After that, I never wanted to lose a memory again. In high school I carried a point and shoot camera everywhere, snapping photos every chance I got and printing them out on a portable printer, which had just started to become popular in the early 2000s. To this day, folks from high school still have some of those photos, and that brings me so much joy.",
+    "Basketball was my first love, and it saved my life in more ways than one. It taught me discipline, teamwork, vision, and consistency. Most of all, it taught me about second chances. When my career started to plateau, I asked myself what else could fill my cup, and I kept coming back to that camera.",
+    "I bring all of that with me to every shoot. I strive to make my clients feel as comfortable as possible, I coach them through the process, and it ultimately becomes a team effort.",
+    "Photography isn't just a job or a way to make ends meet. It's me helping others hold onto the moments we'd otherwise forget if it weren't for film, digital, and video. If you've got a moment worth remembering, let's capture it together."
+  ]
 }
