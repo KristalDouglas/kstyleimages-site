@@ -33,3 +33,165 @@ function navHTML(activeSlug) {
     const label = sessionData[s.slug].title;
     const cls = s.slug === activeSlug ? ' class="active"' : "";
     return `<a href="${s.slug}.html"${cls}>${label}</a>`;
+  }).join("");
+  return `
+<nav class="site-nav">
+  <a href="index.html" class="nav-mark">K Styles Images</a>
+  <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+  <div class="nav-links">
+    <div class="work-dropdown">
+      <button type="button" class="dropdown-trigger" aria-expanded="false">Portfolios</button>
+      <div class="work-dropdown-panel">${dropdown}</div>
+    </div>
+    <a href="${site.calendlyUrl}" target="_blank" rel="noopener" class="nav-book">Book a session</a>
+  </div>
+</nav>`;
+}
+
+function footerHTML() {
+  return `
+<footer>
+  <div class="foot-mark">K Styles Images</div>
+  <div class="foot-links">
+    <a href="${site.calendlyUrl}" target="_blank" rel="noopener">Book a session</a>
+    <a href="${site.instagramUrl}" target="_blank" rel="noopener">Instagram</a>
+    <a href="${site.linktreeUrl}" target="_blank" rel="noopener">Linktree</a>
+  </div>
+  <div>&copy; 2026 K Styles Images</div>
+</footer>`;
+}
+
+function pageShell(title, body, activeSlug, shareImage, shareDescription) {
+  const desc = shareDescription || "K Styles Images — portrait and fashion photography portfolio.";
+  const img = "https://kstylesimages.com/" + (shareImage || site.heroImage);
+  const pageUrl = "https://kstylesimages.com/" + (activeSlug ? activeSlug + ".html" : "");
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title}</title>
+<meta name="description" content="${desc}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="${img}">
+<meta property="og:url" content="${pageUrl}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${img}">
+<link rel="stylesheet" href="assets/style.css">
+<style>:root{--accent:${site.accentColor};--accent-bright:${accentBright};--bg:${site.backgroundColor};--text:${site.textColor};}</style>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>if(window.netlifyIdentity){window.netlifyIdentity.on("init",function(user){if(!user){window.netlifyIdentity.on("login",function(){document.location.href="/admin/";});}});}</script>
+</head>
+<body>
+${navHTML(activeSlug)}
+${body}
+${footerHTML()}
+<script src="assets/site.js"></script>
+</body>
+</html>
+`;
+}
+
+function figuresHTML(imgs, label) {
+  return imgs
+    .map((src, i) => `<figure><img src="${src}" alt="${label} photo ${i + 1}" loading="lazy"></figure>`)
+    .join("");
+}
+
+// ---------- Home page ----------
+let homeFigs = "";
+let imgCount = 0;
+let homePoolScript = "";
+if (site.homepageImages && site.homepageImages.length) {
+  site.homepageImages.forEach((item) => {
+    const src = item.src || item;
+    const loadAttr = imgCount < 6 ? "eager" : "lazy";
+    homeFigs += `<figure><img src="${src}" alt="K Styles Images" loading="${loadAttr}"></figure>`;
+    imgCount++;
+  });
+} else {
+  const pool = [];
+  SESSIONS.forEach((s) => {
+    const data = sessionData[s.slug];
+    (data.images || []).forEach((src) => {
+      pool.push({ src, slug: s.slug, label: data.title });
+    });
+  });
+  homePoolScript = `<script>window.HOME_POOL=${JSON.stringify(pool)};</script>`;
+
+  SESSIONS.forEach((s) => {
+    const data = sessionData[s.slug];
+    const label = data.title;
+    const imgs = data.images || [];
+    const step = Math.max(1, Math.ceil(imgs.length / 6));
+    const sample = imgs.length <= 6 ? imgs : imgs.filter((_, idx) => idx % step === 0).slice(0, 6);
+    sample.forEach((src) => {
+      const loadAttr = imgCount < 6 ? "eager" : "lazy";
+      homeFigs += `<figure><a href="${s.slug}.html"><img src="${src}" alt="${label}" loading="${loadAttr}"><figcaption>${label}</figcaption></a></figure>`;
+      imgCount++;
+    });
+  });
+}
+
+const aboutParas = (site.aboutText || []).map((t) => `<p>${t}</p>`).join("");
+const aboutHTML = aboutParas ? `
+<style>
+.about{max-width:760px;margin:0 auto;padding:110px 5vw 90px;}
+.about h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.5vw,3rem);line-height:1.1;margin-bottom:28px;}
+.about h2::before{content:"";display:block;width:56px;height:1px;background:var(--accent);margin-bottom:26px;}
+.about p{color:var(--text);opacity:0.88;font-size:1.05rem;line-height:1.85;margin-bottom:22px;}
+.about .btn{margin-top:14px;}
+</style>
+<section id="about" class="about">
+  <h2>${site.aboutTitle || "About"}</h2>
+  ${aboutParas}
+  <a href="${site.calendlyUrl}" target="_blank" rel="noopener" class="btn">Book a session</a>
+</section>` : "";
+
+const homeBody = `
+<section class="hero">
+  <img src="${site.heroImage}" alt="K Styles Images featured portrait">
+  <div class="hero-content">
+    <h1>K Styles Images</h1>
+    <p>${site.tagline}</p>
+    <div class="hero-actions">
+      <a href="${site.calendlyUrl}" target="_blank" rel="noopener" class="btn">Book a session</a>
+    </div>
+  </div>
+</section>
+<section id="work" class="wall home">
+${homeFigs}
+</section>
+${aboutHTML}
+${homePoolScript}`;
+
+fs.writeFileSync(path.join(ROOT, "index.html"), pageShell("K Styles Images — Portrait & Fashion Photography", homeBody, null, "assets/img/og-share.jpg", site.shareDescription || site.tagline));
+
+// ---------- Category pages ----------
+SESSIONS.forEach((s) => {
+  const data = sessionData[s.slug];
+  const mainImgs = data.images || [];
+  const productImgs = data.productImages || [];
+
+  let body = `
+<header class="cat-bar">
+  <a class="back-link" href="index.html#work">&#8592; All work</a>
+  <h1>${data.title}</h1>
+  <div class="pkg">${data.price} — ${data.description}</div>
+</header>
+<section class="wall gallery">${figuresHTML(mainImgs, data.title)}</section>`;
+
+  if (productImgs.length) {
+    body += `
+<div class="section-divider"><span>Product Photography</span></div>
+<section class="wall gallery">${figuresHTML(productImgs, "Product Photography")}</section>`;
+  }
+
+  fs.writeFileSync(path.join(ROOT, `${s.slug}.html`), pageShell(`${data.title} — K Styles Images`, body, s.slug, mainImgs[0], data.description));
+});
+
+console.log("Site built:", ["index.html", ...SESSIONS.map((s) => s.slug + ".html")].join(", "));
